@@ -1,5 +1,5 @@
 # lzhxwmr.github.io
 
-[![Build Status](https://travis-ci.org/lzhxwmr/blog.github.io.svg?branch=blog-src)](https://travis-ci.org/lzhxwmr/blog.github.io)
+[![CI](https://github.com/lzhxwmr/blog.github.io/actions/workflows/main.yml/badge.svg?branch=blog-src)](https://github.com/lzhxwmr/blog.github.io/actions/workflows/main.yml)
 
 [![Build Status](http://ci.oaak.eu.org:8080/job/Hexo/badge/icon?subject=Jenkins&color=yellowgreen)](http://ci.oaak.eu.org:8080/job/Hexo/)

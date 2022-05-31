@@ -1,43 +1,40 @@
-# This is a basic workflow to help you get started with Actions
+name: GitHub Pages
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the blog-src branch
   push:
-    branches: [ blog-src ]
+    branches:
+      - blog-src
   pull_request:
-    branches: [ blog-src ]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-    
-    # specify node version env vars
-    strategy:
-      matrix:
-        node-versoin: [12.x, 14.x, 16.x]
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+  deploy:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      
-      # Use node 
-      - name: Use Node.js ${{ matrix.node-version }}
+
+      - name: Setup Node
         uses: actions/setup-node@v3
+        with:
+          node-version: '12'
 
-      # Install dependencies
-      - name: Install dependencies
-        run: npm install
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-      # Deploy to branch
+      - run: npm i
+      - run: npm run build
+
       - name: Deploy
-        run: npm run deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./public
