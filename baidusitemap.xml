@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://zhli.me/2020/08/03/dtk1/</loc>
-    <lastmod>2022-05-31</lastmod>
-  </url>
-  <url>
-    <loc>https://zhli.me/2020/02/03/hexo-github1/</loc>
-    <lastmod>2022-05-31</lastmod>
-  </url>
-  <url>
     <loc>https://zhli.me/2020/02/04/hexo-github2/</loc>
     <lastmod>2022-05-31</lastmod>
   </url>
@@ -42,6 +34,18 @@
   </url>
   <url>
     <loc>https://zhli.me/2020/04/17/leettable/</loc>
+    <lastmod>2022-05-31</lastmod>
+  </url>
+  <url>
+    <loc>https://zhli.me/2020/08/03/dtk1/</loc>
+    <lastmod>2022-05-31</lastmod>
+  </url>
+  <url>
+    <loc>https://zhli.me/2022/05/30/github-actions-auto-deploy/</loc>
+    <lastmod>2022-05-31</lastmod>
+  </url>
+  <url>
+    <loc>https://zhli.me/2020/02/03/hexo-github1/</loc>
     <lastmod>2022-05-31</lastmod>
   </url>
 </urlset> 
