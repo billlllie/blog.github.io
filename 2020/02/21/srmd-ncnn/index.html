@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/gitosun/yedetuku/2020/08/01/934e72.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/gitosun/yedetuku/2020/08/01/934e72.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/themes/blue/pace-theme-flash.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhli.me","root":"/","scheme":"Pisces","version":"8.0.0-rc.5","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+
+  <meta name="description" content="nihui大佬！！！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Srmd-ncnn-vulkan 编译记录">
+<meta property="og:url" content="https://zhli.me/2020/02/21/srmd-ncnn/index.html">
+<meta property="og:site_name" content="A Blog">
+<meta property="og:description" content="nihui大佬！！！">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/gitosun/yedetuku/2020/04/16/e66c30.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/gitosun/yedetuku/2020/04/16/a81295.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/gitosun/yedetuku/2020/04/16/c9789a.png">
+<meta property="article:published_time" content="2020-02-21T20:22:12.000Z">
+<meta property="article:modified_time" content="2022-05-30T23:51:00.715Z">
+<meta property="article:author" content="lzhxwmr">
+<meta property="article:tag" content="ncnn">
+<meta property="article:tag" content="nihui大佬">
+<meta property="article:tag" content="tencent&#x2F;ncnn">
+<meta property="article:tag" content="vulkan">
+<meta property="article:tag" content="protobuf">
+<meta property="article:tag" content="vs">
+<meta property="article:tag" content="Visual Studio">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/gitosun/yedetuku/2020/04/16/e66c30.png">
+
+
+<link rel="canonical" href="https://zhli.me/2020/02/21/srmd-ncnn/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script><script data-ad-client="ca-pub-3615779090528349" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <title>Srmd-ncnn-vulkan 编译记录 | A Blog</title>
+  
+    <script>
+      function sendPageView() {
+        if (CONFIG.hostname !== location.hostname) return;
+        var uid = localStorage.getItem('uid') || (Math.random() + '.' + Math.random());
+        localStorage.setItem('uid', uid);
+        navigator.sendBeacon('https://www.google-analytics.com/collect', new URLSearchParams({
+          v  : 1,
+          tid: 'UA-109144187-3',
+          cid: uid,
+          t  : 'pageview',
+          dp : encodeURIComponent(location.pathname)
+        }));
+      }
+      document.addEventListener('pjax:complete', sendPageView);
+      sendPageView();
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">A Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">编译环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91protobuf"><span class="nav-number">2.</span> <span class="nav-text">编译protobuf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91ncnn"><span class="nav-number">3.</span> <span class="nav-text">编译ncnn</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Vulkan-SDK"><span class="nav-number">3.1.</span> <span class="nav-text">安装Vulkan SDK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91ncnn%E5%BA%93"><span class="nav-number">3.2.</span> <span class="nav-text">编译ncnn库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91srmd-ncnn-vulkan"><span class="nav-number">4.</span> <span class="nav-text">编译srmd-ncnn-vulkan</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E9%A1%B9%E7%9B%AE"><span class="nav-number">4.1.</span> <span class="nav-text">生成项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91exe"><span class="nav-number">4.2.</span> <span class="nav-text">编译exe</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">小结</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lzhxwmr"
+      src="https://cdn.jsdelivr.net/gh/gitosun/yedetuku/2020/08/01/934e72.png">
+  <p class="site-author-name" itemprop="name">lzhxwmr</p>
+  <div class="site-description" itemprop="description">Just a Blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+        <div class="back-to-top animated">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2x6aHh3bXI=" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhli.me/2020/02/21/srmd-ncnn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://cdn.jsdelivr.net/gh/gitosun/yedetuku/2020/08/01/934e72.png">
+      <meta itemprop="name" content="lzhxwmr">
+      <meta itemprop="description" content="Just a Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A Blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Srmd-ncnn-vulkan 编译记录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-02-21 12:22:12" itemprop="dateCreated datePublished" datetime="2020-02-21T12:22:12-08:00">2020-02-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-05-30 16:51:00" itemprop="dateModified" datetime="2022-05-30T16:51:00-07:00">2022-05-30</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">记录</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%B0%E5%BD%95/%E7%BC%96%E8%AF%91/" itemprop="url" rel="index"><span itemprop="name">编译</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2020/02/21/srmd-ncnn/" class="post-meta-item leancloud_visitors" data-flag-title="Srmd-ncnn-vulkan 编译记录" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fas fa-hand-pointer"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/02/21/srmd-ncnn/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/02/21/srmd-ncnn/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>nihui大佬！！！</p>
+</blockquote>
+<span id="more"></span>
+<p><span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9uaWh1aS9zdGF0dXMvMTIzMDExNzI2Njc0Nzg3NTMyOD9zPTIw">推特膜拜入口<i class="fa fa-external-link-alt"></i></span></p>
+<p>偶尔在推上看到了nihui大佬挖的新坑，可以将图片放大并降噪，而最近拍的照片像素不太够作为壁纸的时候自动缩放总是会导致马赛克频出，因此想要尝试使用srmd来放大一下拍出来的壁纸。</p>
+<h2 id="编译环境"><a href="#编译环境" class="headerlink" title="编译环境"></a>编译环境</h2><ul>
+<li>Windows 10 1909</li>
+<li>Visual Studio 2019<br>注：VS一定要在开始前装好，并确认C++相关组件已安装</li>
+</ul>
+<h2 id="编译protobuf"><a href="#编译protobuf" class="headerlink" title="编译protobuf"></a>编译protobuf</h2><p>打开Visual Studio Tools下的x64 Native Tools Command Prompt for VS 2019<br>下载<span id="inline-blue">protobuf</span>并解压：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvb2dsZS9wcm90b2J1Zi9hcmNoaXZlL3YzLjQuMC56aXA=">https://github.com/google/protobuf/archive/v3.4.0.zip<i class="fa fa-external-link-alt"></i></span></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd &lt;protobuf-root-dir&gt;</span><br><span class="line">mkdir build-vs</span><br><span class="line">cd build-vs</span><br><span class="line">cmake -G&quot;NMake Makefiles&quot; -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%cd%/install -Dprotobuf_BUILD_TESTS=OFF -Dprotobuf_MSVC_STATIC_RUNTIME=OFF ../cmake</span><br><span class="line">nmake</span><br><span class="line">nmake install</span><br></pre></td></tr></table></figure>
+
+<p>其中需要强调的是，mkdir了之后不要忘记进入目录，不然后面的cmake找不到CMakeLists（<del>只有笔者才会犯的错误</del>）</p>
+<h2 id="编译ncnn"><a href="#编译ncnn" class="headerlink" title="编译ncnn"></a>编译ncnn</h2><h3 id="安装Vulkan-SDK"><a href="#安装Vulkan-SDK" class="headerlink" title="安装Vulkan SDK"></a>安装Vulkan SDK</h3><p>因为下面的项目用到了<span id="inline-yellow">Vulkan</span>，因此现在必须先安装好<span id="inline-yellow">Vulkan SDK</span>：<span class="exturl" data-url="aHR0cHM6Ly92dWxrYW4ubHVuYXJnLmNvbS9zZGsvaG9tZQ==">https://vulkan.lunarg.com/sdk/home<i class="fa fa-external-link-alt"></i></span><br>并且设置好环境变量。<br>需要设置的环境变量分别是：</p>
+<ol>
+<li>Vulkan_INCLUDE_DIR: %VULKAN_SDK%\Include</li>
+<li>Vulkan_LIBRARY: %VULKAN_SDK%\Lib</li>
+<li>VULKAN_SDK: path-to-vulkan</li>
+</ol>
+<center><img src="https://cdn.jsdelivr.net/gh/gitosun/yedetuku/2020/04/16/e66c30.png" width=50%></img></center>
+
+<p>其中VULKAN_SDK是安装好就自动设置好了的，只需配置1、2即可。</p>
+<h3 id="编译ncnn库"><a href="#编译ncnn库" class="headerlink" title="编译ncnn库"></a>编译ncnn库</h3><p>依旧是打开我们心爱的x64 Native Tools Command Prompt for VS 2019</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/Tencent/ncnn.git</span><br><span class="line">cd &lt;ncnn-root-dir&gt;</span><br><span class="line">mkdir -p build-vs</span><br><span class="line">cd build-vs</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">其中的&lt;protobuf-root-dir&gt;请自行替换</span></span><br><span class="line">cmake -G&quot;NMake Makefiles&quot; -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%cd%/install -DProtobuf_INCLUDE_DIR=&lt;protobuf-root-dir&gt;/build-vs/install/include -DProtobuf_LIBRARIES=&lt;protobuf-root-dir&gt;/build-vs2017/install/lib/libprotobuf.lib -DProtobuf_PROTOC_EXECUTABLE=&lt;protobuf-root-dir&gt;/build-vs/install/bin/protoc.exe -DNCNN_VULKAN=ON ..</span><br><span class="line"></span><br><span class="line">nmake</span><br><span class="line">nmake install</span><br></pre></td></tr></table></figure>
+
+<p>至此<span id="inline-purple">ncnn</span>的库基本就编译好了。如果遇到了编译错误可以从路径、之前的编译、以及上述的各个配置入手排除。应该是没什么bug或者错误的。</p>
+<h2 id="编译srmd-ncnn-vulkan"><a href="#编译srmd-ncnn-vulkan" class="headerlink" title="编译srmd-ncnn-vulkan"></a>编译srmd-ncnn-vulkan</h2><p>项目最终使用VS 2019编译完成。</p>
+<h3 id="生成项目"><a href="#生成项目" class="headerlink" title="生成项目"></a>生成项目</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/nihui/srmd-ncnn-vulkan.git</span><br><span class="line">cd srmd-ncnn-vulkan</span><br></pre></td></tr></table></figure>
+
+<p>现在我们来修改src中的CMakeLists.txt文件。<br>找到文件中如下内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">change these path to yours</span></span><br><span class="line">set(ncnn_DIR &quot;/home/nihui/dev/ncnn/build/install/lib/cmake/ncnn&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>将set后面的<code>/home/nihui/dev/ncnn/build/install/lib/cmake/ncnn</code>设置为刚刚ncnn编译好后install中的对应路径。<br>在刚刚的编译中应该得到的路径就是<code>&lt;ncnn-root-dir&gt;/build-vs/install/lib/cmake/ncnn</code><br>记得要把win路径中的<span id="inline-red">\</span>替换为<span id="inline-green">/</span>。<br>然后我们在srmd-ncnn-vulkan中继续命令行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd src</span><br><span class="line">mkdir build</span><br><span class="line">cmake -B build\</span><br></pre></td></tr></table></figure>
+
+<p>这时在build文件夹下就生成了srmd的sln，接下来就可以使用vs来编译生成exe了。</p>
+<h3 id="编译exe"><a href="#编译exe" class="headerlink" title="编译exe"></a>编译exe</h3><p>打开<code>build/srmd-ncnn-vulkan.sln</code><br>将solution configuration中的Debug修改为Release</p>
+<center><img src="https://cdn.jsdelivr.net/gh/gitosun/yedetuku/2020/04/16/a81295.png" width=50%></img></center>
+
+<p>然后右键srmd-ncnn-vulkan进行编译。</p>
+<center><img src="https://cdn.jsdelivr.net/gh/gitosun/yedetuku/2020/04/16/c9789a.png" width=50%></img></center>
+
+<p>提示编译成功后即可在bulid目录下的Release中找到生成的exe</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>你以为我给自己挖的坑现在就说完了？<br>NO NO NO<br>现在得到的exe文件并不能直接在当前目录下直接跑出github上给出的示例命令。原因就是示例命令中没有给出当前exe所处的工作目录，也没有-m来指定model的目录，因此直接在Release下运行会报错<code>_wfopen() ??? failed</code>。想要解决这个问题有两种方法：</p>
+<ol>
+<li>通过-m指定model目录</li>
+<li>如果想用项目自带的model，将srmd-ncnn-vulkan.exe移动到<code>srmd-ncnn-vulkan/models/</code>下</li>
+</ol>
+<p>然后就能够成功运行了(当然input.jpg自备)<br>试着作死用XPS的集显跑了一下，跑了十分钟才完成一张图，感觉整个电脑都起飞了。</p>
+<p>感谢nihui大佬！</p>
+<blockquote>
+<p>参考链接：</p>
+<ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1RlbmNlbnQvbmNubi93aWtpL2hvdy10by1idWlsZCNidWlsZC1mb3Itd2luZG93cy14NjQtdXNpbmctdmlzdWFsLXN0dWRpby1jb21tdW5pdHktMjAxNw==">https://github.com/Tencent/ncnn/wiki/how-to-build#build-for-windows-x64-using-visual-studio-community-2017<i class="fa fa-external-link-alt"></i></span></li>
+</ol>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ncnn/" rel="tag"># ncnn</a>
+              <a href="/tags/nihui%E5%A4%A7%E4%BD%AC/" rel="tag"># nihui大佬</a>
+              <a href="/tags/tencent-ncnn/" rel="tag"># tencent/ncnn</a>
+              <a href="/tags/vulkan/" rel="tag"># vulkan</a>
+              <a href="/tags/protobuf/" rel="tag"># protobuf</a>
+              <a href="/tags/vs/" rel="tag"># vs</a>
+              <a href="/tags/Visual-Studio/" rel="tag"># Visual Studio</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/02/05/valine-error-prob/" rel="prev" title="Valine问题踩坑">
+                  <i class="fa fa-chevron-left"></i> Valine问题踩坑
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/04/17/leettable/" rel="next" title="Leetcode 题型分类">
+                  Leetcode 题型分类 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fas fa-wheelchair"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lzhxwmr</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fas fa-users"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fas fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  </div><script async defer data-website-id="d6bc2b7a-84c4-4c97-b76c-e8fccb61d44c" src="http://um.oaak.eu.org/umami.js"></script>
+<script color="100,100,100" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+
+
+    <div class="pjax">
+  
+
+  
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: "/2020/02/21/srmd-ncnn/",
+    }, {"enable":true,"appId":"EuVDrsbhwzQqhrqHbUcLTkPl-gzGzoHsz","appKey":"JtnIQSCLGL5cSmYoxdGzG7jG","placeholder":"请多指教～","avatar":"mm","meta":["nick","mail"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":false,"requiredFields":["nick"]}
+    ));
+  }, window.Valine);
+});
+</script>
+
+    </div>
+</body>
+</html>
