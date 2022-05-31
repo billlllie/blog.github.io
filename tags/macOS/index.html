@@ -25,26 +25,18 @@
     var CONFIG = {"hostname":"zhli.me","root":"/","scheme":"Pisces","version":"8.0.0-rc.5","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
   </script>
 
-  <meta name="description" content="关于自己碰到Valine评论问题的记录">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Valine问题踩坑">
-<meta property="og:url" content="https://zhli.me/2020/02/05/valine-error-prob/index.html">
+  <meta name="description" content="Just a Blog">
+<meta property="og:type" content="website">
+<meta property="og:title" content="A Blog">
+<meta property="og:url" content="https://zhli.me/tags/macOS/index.html">
 <meta property="og:site_name" content="A Blog">
-<meta property="og:description" content="关于自己碰到Valine评论问题的记录">
+<meta property="og:description" content="Just a Blog">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-02-05T07:43:58.000Z">
-<meta property="article:modified_time" content="2022-05-31T02:18:06.468Z">
 <meta property="article:author" content="lzhxwmr">
-<meta property="article:tag" content="踩坑">
-<meta property="article:tag" content="Valine">
-<meta property="article:tag" content="NexT主题">
-<meta property="article:tag" content="Next Theme">
-<meta property="article:tag" content="conflict">
-<meta property="article:tag" content="冲突">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://zhli.me/2020/02/05/valine-error-prob/">
+<link rel="canonical" href="https://zhli.me/tags/macOS/">
 
 
 <script data-pjax class="page-configurations">
@@ -52,12 +44,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : true,
+    isPost : false,
     lang   : 'zh-CN'
   };
 </script><script data-ad-client="ca-pub-3615779090528349" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
-  <title>Valine问题踩坑 | A Blog</title>
+  <title>标签: macOS | A Blog</title>
   
     <script>
       function sendPageView() {
@@ -188,7 +180,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -200,7 +192,6 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%82%E5%AF%9F"><span class="nav-number">2.</span> <span class="nav-text">观察</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3"><span class="nav-number">3.</span> <span class="nav-text">解决</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%A6%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E6%80%9D%E8%B7%AF"><span class="nav-number">4.</span> <span class="nav-text">另一种解决思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -259,157 +250,58 @@
 </noscript>
 
 
-    <div class="main-inner post posts-expand">
+    <div class="main-inner tag posts-collapse">
       
 
       
 
-    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://zhli.me/2020/02/05/valine-error-prob/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://cdn.jsdelivr.net/gh/gitosun/yedetuku/2020/08/01/934e72.png">
-      <meta itemprop="name" content="lzhxwmr">
-      <meta itemprop="description" content="Just a Blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="A Blog">
-    </span>
-
-    
-    
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          Valine问题踩坑
-        </h1>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2020-02-05 07:43:58" itemprop="dateCreated datePublished" datetime="2020-02-05T07:43:58+00:00">2020-02-05</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-05-31 02:18:06" itemprop="dateModified" datetime="2022-05-31T02:18:06+00:00">2022-05-31</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">记录</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%B0%E5%BD%95/%E6%8E%92%E9%94%99/" itemprop="url" rel="index"><span itemprop="name">排错</span></a>
-        </span>
-    </span>
-
   
-    <span id="/2020/02/05/valine-error-prob/" class="post-meta-item leancloud_visitors" data-flag-title="Valine问题踩坑" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fas fa-hand-pointer"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span id="busuanzi_value_page_pv"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/02/05/valine-error-prob/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/02/05/valine-error-prob/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
+  <div class="post-block">
+    <div class="post-content">
+      <div class="collection-title">
+        <h2 class="collection-header">macOS
+          <small>标签</small>
+        </h2>
+      </div>
 
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-        <blockquote>
-<p>关于自己碰到Valine评论问题的记录</p>
-</blockquote>
-<span id="more"></span>
-<p>Valine的配置在之前的博文里面有讲到过，这里提一下在写博文时候发现的一个笔者给自己挖的坑。</p>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>在写<a href="/2020/02/04/hexo-github2/">通过Github Pages搭建Hexo（二）</a>这篇博文的时候，Valine的block无法正常加载（具体的表现就是下面的评论区无法加载出来）。</p>
-<h1 id="观察"><a href="#观察" class="headerlink" title="观察"></a>观察</h1><p>一开始笔者认为，这个是由于各个插件组件相互冲突导致的，于是笔者通过Google的方法了解到了Valine会和LeanCloud的阅读次数以及pjax这两个插件有所冲突。但是在周详地检查过各个issue提出的解决方法后，笔者发现自己<strong>根本就没有启用</strong>除了Valine评论以外的这些功能🤦‍♂️。因此基本可以排除组件冲突的原因。</p>
-<p>经过笔者的进一步观察发现，这个问题仅出现在<a href="/2020/02/04/hexo-github2/">通过Github Pages搭建Hexo（二）</a>上，而不会出现在<a href="/2020/02/03/hexo-github1/">通过Github Pages搭建Hexo（一）</a>上面，这个诡异的差别就成为了解决这个问题的关键。</p>
-<p>于是笔者打开两篇博文页面，在Console中查看log，发现了在出问题的页面上面没有加载Valine的js，因此导致了在下面评论区的block中，Valine对象无法初始化的问题。于是问题可以基本上锁定在页面js加载这方面。</p>
-<p>而笔者在进行了inspect elements的细致观察对比过后，发现（二）页面上缺少加载Valine的script tag，因此可以断定是某些地方发生了冲突导致该entry没有能够正常生成。</p>
-<h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><p>在笔者苦思冥想的时候突然注意到了博文里面的一个二级标题，其内容便是Valine，而且与其对应的tag id也恰好是Valine。因此笔者尝试着改掉了该处的标题内容，结果问题成功得到了修复，评论区也能够顺利地重新加载了出来。</p>
-<h1 id="另一种解决思路"><a href="#另一种解决思路" class="headerlink" title="另一种解决思路"></a>另一种解决思路</h1><p>既然现在已经知道了这个问题的原因是id冲突，那么手动将二级标题使用h2 tag以html的格式写出来也是一个可行的workaround。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>所以说还是自己莫名其妙的操作把自己坑了几个小时的时间进去🤷‍♂️。介于这个也算不上什么bug，所以也没有去GitHub下面反馈的想法。就此留下这篇记录供以后遇到类似问题的人参考吧。</p>
-
+      
+    <div class="collection-year">
+      <span class="collection-header">2020</span>
     </div>
 
-    
-    
-    
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
+              datetime="2020-09-07T18:05:06+00:00"
+              content="2020-09-07">
+          09-07
+        </time>
+      </div>
 
-    <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E8%B8%A9%E5%9D%91/" rel="tag"># 踩坑</a>
-              <a href="/tags/Valine/" rel="tag"># Valine</a>
-              <a href="/tags/NexT%E4%B8%BB%E9%A2%98/" rel="tag"># NexT主题</a>
-              <a href="/tags/Next-Theme/" rel="tag"># Next Theme</a>
-              <a href="/tags/conflict/" rel="tag"># conflict</a>
-              <a href="/tags/%E5%86%B2%E7%AA%81/" rel="tag"># 冲突</a>
-          </div>
+      <div class="post-title">
+          <a class="post-title-link" href="/2020/09/07/macexternal/" itemprop="url">
+            <span itemprop="name">MacBook Pro 外接显示器设置（高刷新率）</span>
+          </a>
+      </div>
 
-        
-
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2020/02/04/hexo-github2/" rel="prev" title="通过Github Pages搭建Hexo（二）">
-                  <i class="fa fa-chevron-left"></i> 通过Github Pages搭建Hexo（二）
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/2020/02/21/srmd-ncnn/" rel="next" title="Srmd-ncnn-vulkan 编译记录">
-                  Srmd-ncnn-vulkan 编译记录 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-    </footer>
+      
+    </header>
   </article>
+
+    </div>
+  </div>
   
   
+  
+
   
 
 
 
       
-    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -552,7 +444,7 @@ NexT.utils.loadComments('#valine-comments', () => {
   NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
     new Valine(Object.assign({
       el  : '#valine-comments',
-      path: "/2020/02/05/valine-error-prob/",
+      path: "/tags/macOS/",
     }, {"enable":true,"appId":"EuVDrsbhwzQqhrqHbUcLTkPl-gzGzoHsz","appKey":"JtnIQSCLGL5cSmYoxdGzG7jG","placeholder":"请多指教～","avatar":"mm","meta":["nick","mail"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":false,"requiredFields":["nick"]}
     ));
   }, window.Valine);
