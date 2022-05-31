@@ -105,9 +105,10 @@ deploy:
   type: 'git'
   repo: git@github.com:lzhxwmr/blog.github.io.git
   branch: gh-pages
+  token: $GITHUB_TOKEN
 
 sitemap:
-  path: sitemap.xml
+  path: sitemap.xml
 
 # Google Analytics
 # Google分析ID
