@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://zhli.me/tags/index.html</loc>
+    
+    <lastmod>2022-06-01</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://zhli.me/2020/08/03/dtk1/</loc>
     
     <lastmod>2022-06-01</lastmod>
@@ -87,13 +94,6 @@
   
   <url>
     <loc>https://zhli.me/categories/index.html</loc>
-    
-    <lastmod>2022-06-01</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://zhli.me/tags/index.html</loc>
     
     <lastmod>2022-06-01</lastmod>
     
